@@ -5,6 +5,10 @@
 // character — a 2-char prefix takes seconds, a 4-char prefix ~1 hour at
 // ~9,000 keys/sec/core, a 5-char prefix ~2 days. Keep it short.
 //
+// IMPORTANT: base58 excludes the characters 0, O, I and l (lowercase L).
+// A pattern containing any of those can NEVER appear in an address.
+// This tool rejects such input instead of searching forever.
+//
 // Uses Node's built-in crypto (OpenSSL, native speed — ~9,000 keys/sec
 // per core, ~100x faster than pure-JS ed25519). No heavy dependencies.
 //
@@ -61,6 +65,15 @@ function main() {
     if (!prefix && !suffix) {
         console.log("Usage: node vanity.js <prefix> [suffix] [--threads N]");
         console.log("Example: node vanity.js jack");
+        process.exit(1);
+    }
+    // Base58 excludes 0, O, I and l — a pattern with any of those can never match.
+    const BASE58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+    const bad = [prefix, suffix].find((s) => s && [...s].some((c) => !BASE58.includes(c)));
+    if (bad) {
+        console.error(`ERROR: "${bad}" is not a valid base58 pattern.`);
+        console.error("Solana addresses use base58, which excludes the characters 0, O, I and l.");
+        console.error(`"${bad}" contains one of those, so it can never appear in an address.`);
         process.exit(1);
     }
     const chars = (prefix + suffix).length;

@@ -8,6 +8,15 @@ one is brute force: generate keys until the address matches. This tool uses
 Node's built-in `crypto` (OpenSSL, native speed — ~9,000 keys/sec per
 core, ~100x faster than pure-JS ed25519) across all your CPU cores.
 
+## Only base58 works
+
+Base58 excludes the characters `0`, `O`, `I` and `l` (lowercase L). A
+pattern containing any of those can **never** appear in an address. The
+tool rejects such input immediately instead of searching forever.
+
+Valid vanity words: `jack`, `sol`, `moon`, `degen`, `based`... (any
+combination of `123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz`).
+
 ## Difficulty
 
 Each base58 character makes it 58x harder:

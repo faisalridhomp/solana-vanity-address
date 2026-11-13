@@ -3,10 +3,23 @@
   "version": "1.0.0",
   "description": "Generate a Solana wallet whose address starts or ends with characters you pick (vanity address), multi-threaded, native-speed ed25519.",
   "main": "vanity.js",
-  "scripts": { "test": "node --check vanity.js" },
-  "keywords": ["solana", "vanity", "address", "ed25519", "wallet", "base58"],
+  "scripts": {
+    "test": "node --check vanity.js"
+  },
+  "keywords": [
+    "solana",
+    "vanity",
+    "address",
+    "ed25519",
+    "wallet",
+    "base58"
+  ],
   "author": "Faisal (jackdefi.ai)",
   "license": "MIT",
-  "dependencies": { "bs58": "^6.0.0" },
-  "engines": { "node": ">=18" }
+  "dependencies": {
+    "bs58": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
 }
